@@ -10,7 +10,7 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 try:
     from local_settings import DEBUG
 except ImportError:
-    DEBUG = False
+    DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
