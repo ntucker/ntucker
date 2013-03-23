@@ -1,4 +1,2 @@
 Django==1.5
-argparse==1.2.1
-distribute==0.6.34
-wsgiref==0.12
+south==0.7.6
