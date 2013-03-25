@@ -8,8 +8,8 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 try:
     from local_settings import DEBUG
 except ImportError:
-    DEBUG = False
-TEMPLATE_DEBUG = DEBUG
+    DEBUG = True
+TEMPLATE_DEBUG = True
 
 ADMINS = (
     ('Nathaniel Tucker', 'natmaster@gmail.com'),
@@ -112,10 +112,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
+    "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
     "cms.context_processors.media",
     "sekizai.context_processors.sekizai",
-    "django.core.context_processors.request",
 )
 
 CMS_TEMPLATES = (
@@ -135,8 +135,9 @@ MIDDLEWARE_CLASSES = (
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
-    'cms.middleware.user.CurrentUserMiddleware',
-    'cms.middleware.toolbar.ToolbarMiddleware',
+    #'cms.middleware.user.CurrentUserMiddleware',
+    #'cms.middleware.toolbar.ToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'ntucker.urls'
@@ -165,6 +166,7 @@ INSTALLED_APPS = (
     'storages',
     'south',
     'django.contrib.sitemaps',
+    'debug_toolbar',
     
     #cms stuff
     'cms',
@@ -179,6 +181,8 @@ INSTALLED_APPS = (
     'cms.plugins.video',
     'cms.plugins.googlemap',
 )
+
+INTERNAL_IPS = ('127.0.0.1',)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

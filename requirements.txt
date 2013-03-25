@@ -6,6 +6,7 @@ south==0.7.6
 dj-database-url==0.2.1
 django-storages==1.1.6
 boto==2.8.0
+django-debug-toolbar==0.9.4
 
 -e git://github.com/divio/django-cms.git@master#egg=django-cms
 django-cms-themes==1.0.10
