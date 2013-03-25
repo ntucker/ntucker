@@ -1,7 +1,11 @@
-Django==1.5
+Django==1.4.5
 psycopg2==2.4.6
+Pillow==2.0.0
 gunicorn==0.17.2
 south==0.7.6
 dj-database-url==0.2.1
 django-storages==1.1.6
 boto==2.8.0
+
+django-cms==2.3.5
+django-cms-themes==1.0.10

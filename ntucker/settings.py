@@ -3,8 +3,6 @@ from __future__ import unicode_literals
 import os.path
 import dj_database_url
 
-gettext = lambda s: s
-
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 try:
@@ -38,7 +36,7 @@ TIME_ZONE = 'US/Pacific'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en'
 LANGUAGES = (
-    ('en', gettext('English')),
+    ('en', 'English'),
 )
 
 SITE_ID = 1
@@ -101,6 +99,26 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    "cms.context_processors.media",
+    "sekizai.context_processors.sekizai",
+    "django.core.context_processors.request",
+)
+
+CMS_TEMPLATES = (
+    ('index.html', 'Index'),
+    ('simple.html', 'Simple'),
+    ('four.html', 'Four blocks'),
+    ('two.html', 'Two blocks'),
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -109,6 +127,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'ntucker.urls'
@@ -120,6 +141,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_ROOT, 'templates'),
 )
 
 INSTALLED_APPS = (
@@ -134,6 +156,21 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'storages',
+    'south',
+    'django.contrib.sitemaps',
+    
+    #cms stuff
+    'cms',
+    'mptt',
+    'menus',
+    'sekizai',
+    'cms.plugins.text',
+    'cms.plugins.picture',
+    'cms.plugins.link',
+    'cms.plugins.file',
+    'cms.plugins.teaser',
+    'cms.plugins.video',
+    'cms.plugins.googlemap',
 )
 
 # A sample logging configuration. The only tangible logging

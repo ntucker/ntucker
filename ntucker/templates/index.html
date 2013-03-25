@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load cms_tags %}
+
+{% block content %}
+      <div id="sidebar_container">
+        <div class="sidebar">
+            {% placeholder "sidebar" or %}
+            <!-- insert your sidebar items here -->
+            <h3>Latest News</h3>
+            <h4>What's the News?</h4>
+            <h5>1st July 2011</h5>
+            <p>Put your latest news item here, or anything else you would like in the sidebar!<br /><a href="#">Read more</a></p>
+          {% endplaceholder %}
+        </div>
+      </div>
+      <article class="content" id="top">
+        {% placeholder "content-top" or %}
+        {% endplaceholder %}
+      </article>
+      <article class="content" id="left">
+        {% placeholder "content-left" or %}
+        {% endplaceholder %}
+      </article>
+      <article class="content" id="right">
+        {% placeholder "content-right" or %}
+        {% endplaceholder %}
+      </article>
+      <div style="clear: left;"></div>
+      <article class="content" id="bottom">
+        {% placeholder "content-bottom" or %}        
+        {% endplaceholder %}
+      </article>
+{% endblock %}

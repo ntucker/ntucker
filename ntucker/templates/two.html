@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load cms_tags %}
+
+{% block content %}
+      <article class="content" id="left">
+        {% placeholder "content-left" or %}
+        {% endplaceholder %}
+      </article>
+      <article class="content" id="right">
+        {% placeholder "content-right" or %}
+        {% endplaceholder %}
+      </article>
+      <div style="clear: left;"></div>
+{% endblock %}
