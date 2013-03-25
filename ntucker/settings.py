@@ -62,7 +62,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    #os.path.join(PROJECT_ROOT, "static"),
+    os.path.join(PROJECT_ROOT, "static"),
 )
 
 # List of finder classes that know how to find static files in
@@ -88,6 +88,12 @@ AWS_HEADERS = {
 from boto.s3.connection import ProtocolIndependentOrdinaryCallingFormat
 AWS_S3_CALLING_FORMAT = ProtocolIndependentOrdinaryCallingFormat()
 AWS_QUERYSTRING_AUTH = False
+
+MEDIA_ROOT = '/%s/' % 'media'
+MEDIA_URL = '//s3.amazonaws.com/%s/media/' % AWS_STORAGE_BUCKET_NAME
+STATIC_ROOT = "/%s/" % 'static'
+STATIC_URL = '//s3.amazonaws.com/%s/static/' % AWS_STORAGE_BUCKET_NAME
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '7g8yomr^&tx9ut=hhl4mk%*#eld64k!h13$i&luuy1k3by$i(v787yhuhnj'
@@ -121,6 +127,7 @@ CMS_TEMPLATES = (
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
