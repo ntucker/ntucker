@@ -54,24 +54,10 @@ USE_L10N = False
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/var/www/example.com/media/"
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, "..", "media")
+STATIC_URL = "https://s3.amazonaws.com/ntucker.me/"
+STATIC_ROOT = STATIC_URL
+MEDIA_URL = STATIC_URL + "media/"
 
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://example.com/media/", "http://media.example.com/"
-MEDIA_URL = '/media/'
-
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/var/www/example.com/static/"
-STATIC_ROOT = os.path.join(PROJECT_ROOT, "..", "static")
-
-# URL prefix for static files.
-# Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -88,6 +74,22 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+
+# Django Storages/S3 Settings
+DEFAULT_FILE_STORAGE = 'utils.s3backend.MediaRootS3BotoStorage'
+STATICFILES_STORAGE = 'utils.s3backend.StaticRootS3BotoStorage'
+
+# AWS Settings
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = 'ntucker.me'
+AWS_HEADERS = {
+               b'Expires': b'Thu, 15 Apr 2020 20:00:00 GMT',
+               b'Cache-Control': b'max-age=86400',
+               }
+from boto.s3.connection import ProtocolIndependentOrdinaryCallingFormat
+AWS_S3_CALLING_FORMAT = ProtocolIndependentOrdinaryCallingFormat()
+AWS_QUERYSTRING_AUTH = False
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '7g8yomr^&tx9ut=hhl4mk%*#eld64k!h13$i&luuy1k3by$i(v787yhuhnj'
@@ -131,6 +133,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'storages',
 )
 
 # A sample logging configuration. The only tangible logging
