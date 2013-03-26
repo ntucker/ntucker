@@ -135,8 +135,8 @@ MIDDLEWARE_CLASSES = (
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
-    #'cms.middleware.user.CurrentUserMiddleware',
-    #'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
