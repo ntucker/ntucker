@@ -1,1 +1,1 @@
-web: gunicorn ntucker.wsgi
+web: newrelic-admin run-program gunicorn ntucker.wsgi

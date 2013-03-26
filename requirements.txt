@@ -8,6 +8,7 @@ django-storages==1.1.6
 boto==2.8.0
 django-debug-toolbar==0.9.4
 sqlalchemy==0.8.0 #for connection pooling
+newrelic==1.10.2.38 #heroku performance monitoring
 
 -e git://github.com/divio/django-cms.git@master#egg=django-cms
 django-cms-themes==1.0.10
