@@ -180,6 +180,7 @@ INSTALLED_APPS = (
     'cms.plugins.teaser',
     'cms.plugins.video',
     'cms.plugins.googlemap',
+    'tinymce',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)

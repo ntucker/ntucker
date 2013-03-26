@@ -10,3 +10,4 @@ django-debug-toolbar==0.9.4
 
 -e git://github.com/divio/django-cms.git@master#egg=django-cms
 django-cms-themes==1.0.10
+django-tinymce==1.5.1b4
