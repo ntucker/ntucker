@@ -1,5 +1,6 @@
 # Django settings for ntucker project.
 from __future__ import unicode_literals
+import posixpath
 import os.path
 import dj_database_url
 
@@ -93,7 +94,6 @@ MEDIA_ROOT = '/%s/' % 'media'
 MEDIA_URL = '//s3.amazonaws.com/%s/media/' % AWS_STORAGE_BUCKET_NAME
 STATIC_ROOT = "/%s/" % 'static'
 STATIC_URL = '//s3.amazonaws.com/%s/static/' % AWS_STORAGE_BUCKET_NAME
-ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '7g8yomr^&tx9ut=hhl4mk%*#eld64k!h13$i&luuy1k3by$i(v787yhuhnj'
