@@ -9,8 +9,8 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 try:
     from local_settings import DEBUG
 except ImportError:
-    DEBUG = True
-TEMPLATE_DEBUG = True
+    DEBUG = False
+TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     ('Nathaniel Tucker', 'natmaster@gmail.com'),
@@ -25,7 +25,7 @@ DATABASES['default']['OPTIONS'] = {'autocommit': True,}
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".ntucker.me", "http://ntucker.herokuapp.com", ]
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -108,7 +108,7 @@ TEMPLATE_LOADERS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
+    #"django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
@@ -184,6 +184,28 @@ INSTALLED_APPS = (
 
 INTERNAL_IPS = ('127.0.0.1',)
 
+CMS_MEDIA_PATH = "cms/"
+CMS_MEDIA_ROOT = os.path.join(MEDIA_ROOT, CMS_MEDIA_PATH)
+CMS_MEDIA_URL = posixpath.join(MEDIA_URL, CMS_MEDIA_PATH)
+CMS_PAGE_MEDIA_PATH = "cms_page_media/"
+CMS_VIEW_PERMISSION = False
+CMS_LANGUAGES = {
+    1: [
+        {
+            'code': 'en',
+            'name': 'English',
+            'public': True,
+        },
+    ],
+    'default': {
+        'fallbacks': ['en',],
+        'redirect_on_fallback':True,
+        'public': False,
+        'hide_untranslated': False,
+    }
+}
+
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
@@ -197,16 +219,34 @@ LOGGING = {
             '()': 'django.utils.log.RequireDebugFalse'
         }
     },
+    "root": {
+        "level" : "WARNING",
+        "handlers": ["console"],
+        "propagate": True,
+    },
+    "formatters": {
+        "simple": {
+            "format": "%(levelname)s %(message)s"
+        },
+        "simple_time": {
+            "format": "%(asctime)s : %(levelname)s %(message)s"
+        },
+    },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+        },
+        "console":{
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "simple"
+        },
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins'],
+            'handlers': ['console'],
             'level': 'ERROR',
             'propagate': True,
         },
