@@ -22,6 +22,8 @@ DATABASES = {
     'default': dj_database_url.config()
 }
 DATABASES['default']['OPTIONS'] = {'autocommit': True,}
+DB_POOL_SIZE = int(os.environ.get('DB_POOL_SIZE', 4))
+USE_DB_CONNECTION_POOLING = os.environ.get('USE_DB_CONNECTION_POOLING', "True") == "True"
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
