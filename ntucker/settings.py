@@ -117,7 +117,7 @@ COMPRESS_JS_FILTERS = ['compressor.filters.jsmin.SlimItFilter']
 COMPRESS_DATA_URI_MAX_SIZE = 1024
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '7g8yomr^&tx9ut=hhl4mk%*#eld64k!h13$i&luuy1k3by$i(v787yhuhnj'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
