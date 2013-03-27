@@ -91,7 +91,6 @@ AWS_HEADERS = {
                b'x-amz-acl': b'public-read',
                b'Expires': b'Thu, 15 Apr 2020 20:00:00 GMT',
                b'Cache-Control': b'max-age=86400',
-               b'Access-Control-Allow-Origin': b'*',
                }
 from boto.s3.connection import ProtocolIndependentOrdinaryCallingFormat
 AWS_S3_CALLING_FORMAT = ProtocolIndependentOrdinaryCallingFormat()
