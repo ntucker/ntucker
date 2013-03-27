@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 import posixpath
 import os.path
+import urlparse
 import dj_database_url
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -128,6 +129,7 @@ CMS_TEMPLATES = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -140,7 +142,10 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 )
+if DEBUG:
+    MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + ('utils.middleware.QueryDebuggerMiddleware',)
 
 ROOT_URLCONF = 'ntucker.urls'
 
@@ -258,6 +263,28 @@ LOGGING = {
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+if "REDIS_URL" in os.environ:
+    urlparse.uses_netloc.append("redis")
+    url = urlparse.urlparse(os.environ["REDIS_URL"])
+    REDIS_HOST = url.hostname
+    REDIS_PORT = url.port
+    REDIS_PASSWORD = url.password
+    
+    # Caching
+    CACHES = {
+        "default": {
+            "BACKEND": "autocache.cache.RedisHerdCache",
+            "LOCATION": ":".join([REDIS_HOST, str(REDIS_PORT)]),
+            "OPTIONS": {
+                "DB": 0,
+                "PASSWORD": REDIS_PASSWORD,
+            },
+            "VERSION": 0,
+        },
+    }
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+CACHE_MIDDLEWARE_SECONDS = 120
 
 
 # local_settings.py can be used to override environment-specific settings
