@@ -75,28 +75,47 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 # Django Storages/S3 Settings
 DEFAULT_FILE_STORAGE = 'utils.s3backend.MediaRootS3BotoStorage'
 STATICFILES_STORAGE = 'utils.s3backend.StaticRootS3BotoStorage'
+COMPRESS_STORAGE = 'utils.s3backend.CachedRootS3BotoStorage'
 
 # AWS Settings
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = 'static.ntucker.me'
 AWS_HEADERS = {
+               b'x-amz-acl': b'public-read',
                b'Expires': b'Thu, 15 Apr 2020 20:00:00 GMT',
                b'Cache-Control': b'max-age=86400',
+               b'Access-Control-Allow-Origin': b'*',
                }
 from boto.s3.connection import ProtocolIndependentOrdinaryCallingFormat
 AWS_S3_CALLING_FORMAT = ProtocolIndependentOrdinaryCallingFormat()
+AWS_S3_CUSTOM_DOMAIN = 'static.ntucker.me'
+AWS_PRELOAD_METADATA = True
+AWS_IS_GZIPPED = True
 AWS_QUERYSTRING_AUTH = False
+AWS_S3_SECURE_URLS = False
 
 MEDIA_ROOT = '/%s/' % 'media'
 MEDIA_URL = '//%s/media/' % AWS_STORAGE_BUCKET_NAME
-STATIC_ROOT = "/%s/" % 'static'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, "..", "static")
 STATIC_URL = '//%s/static/' % AWS_STORAGE_BUCKET_NAME
+
+COMPRESS_URL = STATIC_URL
+COMPRESS_ROOT = STATIC_ROOT
+COMPRESS_OFFLINE = True
+# Subdirectory of COMPRESS_ROOT to store the cached media files in
+COMPRESS_OUTPUT_DIR = "compress"
+
+COMPRESS_PARSER = "compressor.parser.Html5LibParser"
+COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter', 'compressor.filters.cssmin.CSSMinFilter', 'compressor.filters.datauri.CssDataUriFilter']
+COMPRESS_JS_FILTERS = ['compressor.filters.jsmin.SlimItFilter']
+COMPRESS_DATA_URI_MAX_SIZE = 1024
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '7g8yomr^&tx9ut=hhl4mk%*#eld64k!h13$i&luuy1k3by$i(v787yhuhnj'
@@ -170,10 +189,11 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'debug_toolbar',
     'storages',
+    'compressor',
     'south',
     'django.contrib.sitemaps',
-    'debug_toolbar',
     
     #cms stuff
     'cms',
@@ -264,9 +284,9 @@ LOGGING = {
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-if "REDIS_URL" in os.environ:
+if "REDISTOGO_URL" in os.environ:
     urlparse.uses_netloc.append("redis")
-    url = urlparse.urlparse(os.environ["REDIS_URL"])
+    url = urlparse.urlparse(os.environ["REDISTOGO_URL"])
     REDIS_HOST = url.hostname
     REDIS_PORT = url.port
     REDIS_PASSWORD = url.password

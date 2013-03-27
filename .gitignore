@@ -1,2 +1,3 @@
 *.pyc
 ntucker/local_settings.py
+/static

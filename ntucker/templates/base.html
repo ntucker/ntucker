@@ -1,5 +1,5 @@
 {% load cms_tags sekizai_tags %}
-{% load cache menu_tags %}
+{% load cache menu_tags compress %}
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
 <head>
@@ -11,7 +11,9 @@
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine&amp;v1" />
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" />
+{% compress css %}
 <link rel="stylesheet" href="{{STATIC_URL}}css/style.css?v=1" />
+{% endcompress %}
 {% render_block "css" %}
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>-->
 <!--[if lt IE 9]><script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script><![endif]-->
