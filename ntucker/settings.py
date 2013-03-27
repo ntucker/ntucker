@@ -83,7 +83,7 @@ STATICFILES_STORAGE = 'utils.s3backend.StaticRootS3BotoStorage'
 # AWS Settings
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = 'ntucker.me'
+AWS_STORAGE_BUCKET_NAME = 'static.ntucker.me'
 AWS_HEADERS = {
                b'Expires': b'Thu, 15 Apr 2020 20:00:00 GMT',
                b'Cache-Control': b'max-age=86400',
@@ -93,9 +93,9 @@ AWS_S3_CALLING_FORMAT = ProtocolIndependentOrdinaryCallingFormat()
 AWS_QUERYSTRING_AUTH = False
 
 MEDIA_ROOT = '/%s/' % 'media'
-MEDIA_URL = '//s3.amazonaws.com/%s/media/' % AWS_STORAGE_BUCKET_NAME
+MEDIA_URL = '//%s/media/' % AWS_STORAGE_BUCKET_NAME
 STATIC_ROOT = "/%s/" % 'static'
-STATIC_URL = '//s3.amazonaws.com/%s/static/' % AWS_STORAGE_BUCKET_NAME
+STATIC_URL = '//%s/static/' % AWS_STORAGE_BUCKET_NAME
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '7g8yomr^&tx9ut=hhl4mk%*#eld64k!h13$i&luuy1k3by$i(v787yhuhnj'
