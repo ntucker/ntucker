@@ -302,6 +302,8 @@ if "REDISTOGO_URL" in os.environ:
             "VERSION": 0,
         },
     }
+    if os.environ.get("CACHE_KEY_PREFIX"):
+        CACHES['default']['KEY_PREFIX'] = os.environ.get("CACHE_KEY_PREFIX")
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 CACHE_MIDDLEWARE_SECONDS = 120
 
