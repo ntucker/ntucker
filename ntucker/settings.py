@@ -209,6 +209,16 @@ INSTALLED_APPS = (
     'tinymce',
 )
 
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']
+EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
+SERVER_EMAIL = "admin@ntucker.me"
+DEFAULT_FROM_EMAIL = "admin@ntucker.me"
+EMAIL_CONFIRMATION_DAYS = 2
+EMAIL_DEBUG = DEBUG
+
 INTERNAL_IPS = ('127.0.0.1',)
 
 CMS_MEDIA_PATH = "cms/"
